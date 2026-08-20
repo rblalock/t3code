@@ -503,6 +503,7 @@ export function ThemeLibrary({
   appearanceMode,
   setAppearanceMode,
   customThemes,
+  omarchyLinkedTheme,
   initialAppearance,
   refreshTheme,
   isImportOpen,
@@ -515,6 +516,7 @@ export function ThemeLibrary({
   appearanceMode: ThemeMode;
   setAppearanceMode: (mode: ThemeMode) => boolean;
   customThemes: ReadonlyArray<ThemeDefinition>;
+  omarchyLinkedTheme: ThemeDefinition | null;
   initialAppearance: ThemeAppearance;
   refreshTheme: () => void;
   isImportOpen: boolean;
@@ -809,6 +811,16 @@ export function ThemeLibrary({
             />
           );
         })}
+        {omarchyLinkedTheme ? (
+          <ThemeLibraryCard
+            activeModes={pickedModesFor(omarchyLinkedTheme.id)}
+            isActive={baseCardId === omarchyLinkedTheme.id}
+            key={omarchyLinkedTheme.id}
+            onUse={() => persistTheme(omarchyLinkedTheme.id)}
+            onUseMode={handlePairPick(omarchyLinkedTheme.id)}
+            theme={getThemeCardDefinition(omarchyLinkedTheme)}
+          />
+        ) : null}
         {customThemeCollections.map(([collectionId, themes]) => (
           <CustomThemeCollectionCard
             activeModesFor={pickedModesFor}
